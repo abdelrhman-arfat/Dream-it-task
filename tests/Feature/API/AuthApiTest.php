@@ -21,7 +21,7 @@ class AuthApiTest extends TestCase
             'password_confirmation' => 'secret123',
         ];
 
-        $response = $this->postJson('/api/v1/auth/register', $payload);
+        $response = $this->postJson('/api/register', $payload);
 
         $response->assertStatus(200);
 
@@ -34,7 +34,7 @@ class AuthApiTest extends TestCase
     {
         $payload = [];
 
-        $response = $this->postJson('/api/v1/auth/register', $payload);
+        $response = $this->postJson('/api/register', $payload);
 
         $response->assertStatus(422)
             ->assertJsonStructure(['success', 'message']);
@@ -50,7 +50,7 @@ class AuthApiTest extends TestCase
             'password_confirmation' => 'secret123',
         ];
 
-        $response = $this->postJson('/api/v1/auth/register', $payload);
+        $response = $this->postJson('/api/register', $payload);
 
         $response->assertStatus(422)
             ->assertJsonStructure(['success', 'message']);
@@ -66,7 +66,7 @@ class AuthApiTest extends TestCase
             'password_confirmation' => 'secret321',
         ];
 
-        $response = $this->postJson('/api/v1/auth/register', $payload);
+        $response = $this->postJson('/api/register', $payload);
 
         $response->assertStatus(422)
             ->assertJsonStructure(['success', 'message']);
@@ -84,7 +84,7 @@ class AuthApiTest extends TestCase
             'password' => 'secret123',
         ];
 
-        $response = $this->postJson('/api/v1/auth/login', $payload);
+        $response = $this->postJson('/api/login', $payload);
 
         $response->assertStatus(200)
             ->assertJsonStructure();
@@ -118,7 +118,7 @@ class AuthApiTest extends TestCase
             'password' => 'secret123',
         ];
 
-        $response = $this->postJson('/api/v1/auth/login', $payload);
+        $response = $this->postJson('/api/login', $payload);
 
         $response->assertStatus(422)
         ->assertJsonStructure(['success', 'message']);
@@ -128,7 +128,7 @@ class AuthApiTest extends TestCase
     {
         $payload = [];
 
-        $response = $this->postJson('/api/v1/auth/login', $payload);
+        $response = $this->postJson('/api/login', $payload);
 
         $response->assertStatus(422)
             ->assertJsonStructure(['success', 'message']);
