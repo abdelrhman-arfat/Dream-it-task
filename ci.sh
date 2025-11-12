@@ -65,9 +65,6 @@ if [[ "${confirm,,}" == "y" ]]; then
   git push origin main
   printf "${GREEN}✅ Successfully merged and pushed to main!${RESET}\n"
   git checkout dev
-
-  printf "🔄 ${BOLD}Do you want to Deploy new updates ? (y/n):${RESET} "
-
 else
   printf "${BLUE}ℹ️ Skipped merging to main.${RESET}\n"
 fi
