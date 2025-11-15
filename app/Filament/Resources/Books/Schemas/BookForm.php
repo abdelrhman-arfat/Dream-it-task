@@ -26,7 +26,26 @@ class BookForm
                     ->required()
                     ->columnSpanFull(),
                 Select::make('author_id')
+                    ->searchable()
+                    ->preload(false)
                     ->relationship('author', 'id')
+                    ->getSearchResultsUsing(function (string $search) {
+                        $locale = session('locale', app()->getLocale());
+                        return User::role('author')
+                            ->where(function ($query) use ($search, $locale) {
+                                $query->where('email', 'like', "%{$search}%")
+                                    ->orWhere('name_en', 'like', "%{$search}%")
+                                    ->orWhere('name_ar', 'like', "%{$search}%");
+                            })
+                            ->limit(50)
+                            ->get()
+                            ->mapWithKeys(function ($user) use ($locale) {
+                                $name = $locale === 'ar' ? $user->name_ar : $user->name_en;
+                                $label = $name . ' (' . $user->email . ')';
+                                return [$user->id => $label];
+                            })
+                            ->toArray();
+                    })
                     ->options(function () {
                         $locale = session('locale', app()->getLocale());
                         return User::role('author')
