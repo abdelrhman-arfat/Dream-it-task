@@ -20,6 +20,7 @@ return [
             'create' => 'Add New Author',
             'edit' => 'Edit Author',
             'details' => 'Author Details',
+            'author_name' => "Author name"
         ],
         'books' => [
             'title' => 'Book List',

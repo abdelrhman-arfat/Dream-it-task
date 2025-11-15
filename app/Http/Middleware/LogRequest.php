@@ -19,14 +19,16 @@ class LogRequest
     {
         if (!app()->runningUnitTests()) {
             try {
-                $this->databaseLog();
+                if (!request()->is("api")) {
+
+                    $this->databaseLog();
+                }
             } catch (\Exception $e) {
-                $this->logger("failed to log the request data in logs table" , [
+                $this->logger("failed to log the request data in logs table", [
                     "message" => $e->getMessage(),
                 ]);
             }
         }
         return $next($request);
-
     }
 }

@@ -2,21 +2,23 @@
 
 return [
     'auth' => [
-        'success' => 'Login successful',
+        'success' => 'Logged in successfully',
         'failed' => 'Login failed',
         'unauthorized' => 'Unauthorized',
-        'forbidden' => 'Forbidden',
-        'incorrect' => 'Incorrect login credentials',
+        'forbidden' => 'Access forbidden',
+        'incorrect' => 'Invalid login credentials',
     ],
 
-    'book' => [
+    'books' => [
         'updated' => 'Book updated successfully',
         'created' => 'Book created successfully',
         'deleted' => 'Book deleted successfully',
         'not_found' => 'Book not found',
+        'listed' => 'Books retrieved successfully',
+        'found' => 'Book found successfully',
     ],
 
-    'user' => [
+    'users' => [
         'created' => 'User created successfully',
         'updated' => 'User updated successfully',
         'deleted' => 'User deleted successfully',

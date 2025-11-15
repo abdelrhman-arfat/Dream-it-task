@@ -27,8 +27,11 @@ class SetLocale
         if ($locale && in_array($locale, $supportedLocales)) {
             App::setLocale($locale);
         } else {
-            App::setLocale(config('app.locale')); // fallback to default
+            App::setLocale(session("locale", config("app.locale"))); // fallback to default
         }
+
+        // Set locale in session
+        session(['locale' => App::getLocale()]);
 
         return $next($request);
     }

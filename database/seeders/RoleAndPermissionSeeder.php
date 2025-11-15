@@ -32,28 +32,36 @@ class RoleAndPermissionSeeder extends Seeder
         foreach ($userPermissions as $permission) {
             Permission::create(['name' => $permission]);
         }
+        $authorPermissions = ['author.view', 'author.store', 'author.edit', 'author.delete'];
+        foreach ($authorPermissions as $permission) {
+            Permission::create(['name' => $permission]);
+        }
 
-        $admin = Role::firstOrCreate(['name' => 'admin']);
+
+        $adminRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'admin']);
+
         Role::firstOrCreate(['name' => 'author']);
+
         $editor = Role::firstOrCreate(['name' => 'editor']);
 
-        $admin->givePermissionTo(Permission::all());
-        $editor->givePermissionTo([ 'book.delete', 'book.store', 'book.edit']);
+        $adminRole->givePermissionTo(Permission::all());
+        $editor->givePermissionTo(['book.delete', 'book.store', 'book.edit']);
 
         // create some user
         $admin = User::firstOrCreate([
             'email' => "abdoarfat2006@gmail.com",
-        ],[
+        ], [
             'name_ar' => 'عبد الرحمن',
             "name_en" => "Abdelrhman",
             "email" => "abdoarfat2006@gmail.com",
             "password" => bcrypt('password'),
         ]);
+        $admin->givePermissionTo(Permission::all());
 
         $admin->assignRole('admin');
         $admin = User::firstOrCreate([
             'email' => "editor@gmail.com",
-        ],[
+        ], [
             'name_ar' => 'عبد الرحمن',
             "name_en" => "Abdelrhman",
             "email" => "editor@gmail.com",
@@ -62,13 +70,13 @@ class RoleAndPermissionSeeder extends Seeder
 
         $admin->assignRole('editor');
 
-        $author= user::firstOrCreate([
-           "email"  => "ahmedShawki@gmail.com",
-        ],[
-           "name_ar" => "احمد شوقي" ,
-           "name_en" => "Ahmed Shawki",
-           "email"  => "ahmedShawki@gmail.com",
-           "password" => bcrypt('password'),
+        $author = user::firstOrCreate([
+            "email"  => "ahmedShawki@gmail.com",
+        ], [
+            "name_ar" => "احمد شوقي",
+            "name_en" => "Ahmed Shawki",
+            "email"  => "ahmedShawki@gmail.com",
+            "password" => bcrypt('password'),
         ]);
         $author->assignRole('author');
 

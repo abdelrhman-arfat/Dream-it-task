@@ -20,19 +20,20 @@ trait ResponseTrait
 
     public function paginationResponse(
         $data = null,
+        $paginationData=null,
         $message = "success",
         $code = 200
     ): JsonResponse
     {
         return response()->json([
             'message' => $message,
-            'data' => $data->items(),
+            'data' => $data,
             'success' => true,
             'meta_data' => [
-                'current_page' => $data->currentPage(),
-                'last_page' => $data->lastPage(),
-                'per_page' => $data->perPage(),
-                'total' => $data->total(),
+                'current_page' => $paginationData->currentPage(),
+                'last_page' => $paginationData->lastPage(),
+                'per_page' => $paginationData->perPage(),
+                'total' => $paginationData->total(),
             ]
         ], $code);
     }

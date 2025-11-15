@@ -4,12 +4,21 @@ namespace Tests\Feature\API;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class AuthApiTest extends TestCase
 {
     use RefreshDatabase;
+    protected function setUp(): void
+    {
+        parent::setUp();
 
+        Role::firstOrCreate([
+            'name' => 'author',
+            'guard_name' => 'web',
+        ]);
+    }
     /** @test */
     public function test_register_user_successfully()
     {
@@ -79,6 +88,8 @@ class AuthApiTest extends TestCase
             'password' => bcrypt('secret123'),
         ]);
 
+        $user->assignRole("author");
+
         $payload = [
             'email' => 'ahmed@example.com',
             'password' => 'secret123',
@@ -96,6 +107,8 @@ class AuthApiTest extends TestCase
             'email' => 'ahmed@example.com',
             'password' => bcrypt('secret123'),
         ]);
+
+        $user->assignRole("author");
 
         $payload = [
             'email' => 'ahmed@example.com',
@@ -121,7 +134,7 @@ class AuthApiTest extends TestCase
         $response = $this->postJson('/api/login', $payload);
 
         $response->assertStatus(422)
-        ->assertJsonStructure(['success', 'message']);
+            ->assertJsonStructure(['success', 'message']);
     }
 
     public function test_login_fails_with_missing_fields()

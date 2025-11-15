@@ -20,10 +20,15 @@ class UserRule implements ValidationRule
             return;
         }
 
+        if (!$u->hasRole("author")) {
+            $fail(__("validation.user_not_author"));
+            return;
+        }
+
         $this->user = $u;
     }
 
-    public function getUser():?User
+    public function getUser(): ?User
     {
         return $this->user;
     }
